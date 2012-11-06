@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <HardwareSerial.h>
+
 HttpService::HttpService()
   : _length(0)
 {
@@ -21,6 +23,10 @@ void HttpService::listeningOnPort(uint16_t port)
 
 void HttpService::begin(IpAddress* address)
 {
+  // Check if we are just continuing streaming data started in another Xbee packet.
+  if (_address.sameIp(address->sourceIp, address->sourcePort))
+    return;
+  
   _address = *address;
 
   _length = 0;

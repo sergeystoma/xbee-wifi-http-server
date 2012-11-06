@@ -259,8 +259,8 @@ void XbeeService::update(int mill)
       case state_api_id: // Read api description.
         _checksum = ch;
         _apiId = ch;
-        Serial.print("Frame:");
-        Serial.println(_apiId, HEX);
+        // Serial.print("Frame:");
+        // Serial.println(_apiId, HEX);
         switch (_apiId)
         {
           case API_AT_RESPONSE: // AT response.
@@ -288,8 +288,8 @@ void XbeeService::update(int mill)
 
       case state_ip_status_read:
         // Read command status.
-        Serial.print("Status:");
-        Serial.println(ch, HEX);
+        // Serial.print("Status:");
+        // Serial.println(ch, HEX);
         _state = state_ignore;
         break;
 
@@ -340,7 +340,7 @@ void XbeeService::update(int mill)
       {
         _checksum += ch;
         _address.sourcePort[1] = ch;
-
+        
         _http.begin(&_address);
           
         _state = state_ip_protocol;
@@ -367,7 +367,7 @@ void XbeeService::update(int mill)
         _checksum += ch;
         _http.add(ch);
         if (--_dataLength == 0)
-        {
+        {          
           _http.donePacket();
           _state = state_ip_checksum;
         }
